@@ -15,78 +15,87 @@ namespace ShoeShop
 
         private void InitializeComponent()
         {
-            this.txtLogin = new System.Windows.Forms.TextBox();
-            this.txtPassword = new System.Windows.Forms.TextBox();
-            this.btnLogin = new System.Windows.Forms.Button();
-            this.btnGuest = new System.Windows.Forms.Button();
-            this.lblLogin = new System.Windows.Forms.Label();
-            this.lblPassword = new System.Windows.Forms.Label();
-            this.SuspendLayout();
-            
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoginForm));
+            txtLogin = new TextBox();
+            txtPassword = new TextBox();
+            btnLogin = new Button();
+            btnGuest = new Button();
+            lblLogin = new Label();
+            lblPassword = new Label();
+            SuspendLayout();
+            // 
             // txtLogin
-            this.txtLogin.Location = new System.Drawing.Point(120, 30);
-            this.txtLogin.Name = "txtLogin";
-            this.txtLogin.Size = new System.Drawing.Size(200, 23);
-            this.txtLogin.TabIndex = 0;
-            
+            // 
+            txtLogin.Location = new Point(120, 30);
+            txtLogin.Name = "txtLogin";
+            txtLogin.Size = new Size(200, 23);
+            txtLogin.TabIndex = 0;
+            // 
             // txtPassword
-            this.txtPassword.Location = new System.Drawing.Point(120, 70);
-            this.txtPassword.Name = "txtPassword";
-            this.txtPassword.PasswordChar = '*';
-            this.txtPassword.Size = new System.Drawing.Size(200, 23);
-            this.txtPassword.TabIndex = 1;
-            
+            // 
+            txtPassword.Location = new Point(120, 70);
+            txtPassword.Name = "txtPassword";
+            txtPassword.PasswordChar = '*';
+            txtPassword.Size = new Size(200, 23);
+            txtPassword.TabIndex = 1;
+            // 
             // btnLogin
-            this.btnLogin.Location = new System.Drawing.Point(120, 110);
-            this.btnLogin.Name = "btnLogin";
-            this.btnLogin.Size = new System.Drawing.Size(95, 30);
-            this.btnLogin.TabIndex = 2;
-            this.btnLogin.Text = "Войти";
-            this.btnLogin.UseVisualStyleBackColor = true;
-            this.btnLogin.Click += new System.EventHandler(this.BtnLogin_Click);
-            
+            // 
+            btnLogin.Location = new Point(98, 110);
+            btnLogin.Name = "btnLogin";
+            btnLogin.Size = new Size(95, 30);
+            btnLogin.TabIndex = 2;
+            btnLogin.Text = "Войти";
+            btnLogin.UseVisualStyleBackColor = true;
+            btnLogin.Click += BtnLogin_Click;
+            // 
             // btnGuest
-            this.btnGuest.Location = new System.Drawing.Point(225, 110);
-            this.btnGuest.Name = "btnGuest";
-            this.btnGuest.Size = new System.Drawing.Size(95, 30);
-            this.btnGuest.TabIndex = 3;
-            this.btnGuest.Text = "Войти как гость";
-            this.btnGuest.UseVisualStyleBackColor = true;
-            this.btnGuest.Click += new System.EventHandler(this.BtnGuest_Click);
-            
+            // 
+            btnGuest.Location = new Point(208, 110);
+            btnGuest.Name = "btnGuest";
+            btnGuest.Size = new Size(140, 30);
+            btnGuest.TabIndex = 3;
+            btnGuest.Text = "Войти как гость";
+            btnGuest.UseVisualStyleBackColor = true;
+            btnGuest.Click += BtnGuest_Click;
+            // 
             // lblLogin
-            this.lblLogin.AutoSize = true;
-            this.lblLogin.Location = new System.Drawing.Point(30, 33);
-            this.lblLogin.Name = "lblLogin";
-            this.lblLogin.Size = new System.Drawing.Size(44, 15);
-            this.lblLogin.TabIndex = 4;
-            this.lblLogin.Text = "Логин:";
-            
+            // 
+            lblLogin.AutoSize = true;
+            lblLogin.Location = new Point(30, 33);
+            lblLogin.Name = "lblLogin";
+            lblLogin.Size = new Size(44, 15);
+            lblLogin.TabIndex = 4;
+            lblLogin.Text = "Логин:";
+            // 
             // lblPassword
-            this.lblPassword.AutoSize = true;
-            this.lblPassword.Location = new System.Drawing.Point(30, 73);
-            this.lblPassword.Name = "lblPassword";
-            this.lblPassword.Size = new System.Drawing.Size(52, 15);
-            this.lblPassword.TabIndex = 5;
-            this.lblPassword.Text = "Пароль:";
-            
+            // 
+            lblPassword.AutoSize = true;
+            lblPassword.Location = new Point(30, 73);
+            lblPassword.Name = "lblPassword";
+            lblPassword.Size = new Size(52, 15);
+            lblPassword.TabIndex = 5;
+            lblPassword.Text = "Пароль:";
+            // 
             // LoginForm
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(360, 170);
-            this.Controls.Add(this.lblPassword);
-            this.Controls.Add(this.lblLogin);
-            this.Controls.Add(this.btnGuest);
-            this.Controls.Add(this.btnLogin);
-            this.Controls.Add(this.txtPassword);
-            this.Controls.Add(this.txtLogin);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.MaximizeBox = false;
-            this.Name = "LoginForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Авторизация";
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(360, 170);
+            Controls.Add(lblPassword);
+            Controls.Add(lblLogin);
+            Controls.Add(btnGuest);
+            Controls.Add(btnLogin);
+            Controls.Add(txtPassword);
+            Controls.Add(txtLogin);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            MaximizeBox = false;
+            Name = "LoginForm";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Авторизация";
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         private System.Windows.Forms.TextBox txtLogin;

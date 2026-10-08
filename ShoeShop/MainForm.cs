@@ -18,6 +18,7 @@ namespace ShoeShop
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            AppHelper.SetAppIcon(this);
             lblUserInfo.Text = $"{LoginForm.CurrentUser.FullName} ({LoginForm.CurrentUser.RoleName})";
             lblUserInfo.Left = btnLogout.Left - lblUserInfo.Width - 20;
 

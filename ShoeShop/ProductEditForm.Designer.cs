@@ -266,6 +266,7 @@ namespace ShoeShop
             this.Name = "ProductEditForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Редактирование товара";
+            this.Icon = System.Drawing.SystemIcons.Application;
             this.Load += new System.EventHandler(this.ProductEditForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numCost)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numStock)).EndInit();

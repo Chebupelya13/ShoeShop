@@ -19,6 +19,7 @@ namespace ShoeShop
             this.lblTitle = new System.Windows.Forms.Label();
             this.lblDescription = new System.Windows.Forms.Label();
             this.lblManufacturer = new System.Windows.Forms.Label();
+            this.lblSupplier = new System.Windows.Forms.Label();
             this.lblCost = new System.Windows.Forms.Label();
             this.lblDiscountCost = new System.Windows.Forms.Label();
             this.lblStock = new System.Windows.Forms.Label();
@@ -41,22 +42,30 @@ namespace ShoeShop
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Size = new System.Drawing.Size(126, 21);
             this.lblTitle.TabIndex = 1;
-            this.lblTitle.Text = "Наименование";
+            this.lblTitle.Text = "Категория | Наименование";
             
             // lblDescription
             this.lblDescription.Location = new System.Drawing.Point(170, 35);
             this.lblDescription.Name = "lblDescription";
-            this.lblDescription.Size = new System.Drawing.Size(350, 40);
+            this.lblDescription.Size = new System.Drawing.Size(350, 35);
             this.lblDescription.TabIndex = 2;
             this.lblDescription.Text = "Описание";
             
             // lblManufacturer
             this.lblManufacturer.AutoSize = true;
-            this.lblManufacturer.Location = new System.Drawing.Point(170, 80);
+            this.lblManufacturer.Location = new System.Drawing.Point(170, 70);
             this.lblManufacturer.Name = "lblManufacturer";
             this.lblManufacturer.Size = new System.Drawing.Size(92, 15);
             this.lblManufacturer.TabIndex = 3;
-            this.lblManufacturer.Text = "Производитель";
+            this.lblManufacturer.Text = "Производитель:";
+            
+            // lblSupplier
+            this.lblSupplier.AutoSize = true;
+            this.lblSupplier.Location = new System.Drawing.Point(170, 90);
+            this.lblSupplier.Name = "lblSupplier";
+            this.lblSupplier.Size = new System.Drawing.Size(73, 15);
+            this.lblSupplier.TabIndex = 8;
+            this.lblSupplier.Text = "Поставщик:";
             
             // lblCost
             this.lblCost.AutoSize = true;
@@ -97,6 +106,7 @@ namespace ShoeShop
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Controls.Add(this.lblSupplier);
             this.Controls.Add(this.lblDiscount);
             this.Controls.Add(this.lblStock);
             this.Controls.Add(this.lblDiscountCost);
@@ -117,6 +127,7 @@ namespace ShoeShop
         private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.Label lblDescription;
         private System.Windows.Forms.Label lblManufacturer;
+        private System.Windows.Forms.Label lblSupplier;
         private System.Windows.Forms.Label lblCost;
         private System.Windows.Forms.Label lblDiscountCost;
         private System.Windows.Forms.Label lblStock;

@@ -19,6 +19,7 @@ namespace ShoeShop
 
         private void OrderEditForm_Load(object sender, EventArgs e)
         {
+            AppHelper.SetAppIcon(this);
             LoadDictionaries();
 
             if (currentOrder != null)
@@ -38,8 +39,6 @@ namespace ShoeShop
                 this.Text = "Добавление заказа";
                 btnDelete.Visible = false;
             }
-            
-            dgvItems.CellValueChanged += DgvItems_CellValueChanged;
         }
 
         private void LoadDictionaries()
@@ -51,6 +50,7 @@ namespace ShoeShop
                     conn.Open();
                     LoadCombo(conn, "SELECT id, name FROM order_statuses", cmbStatus);
                     LoadCombo(conn, "SELECT id, address FROM pickup_points", cmbPickupPoint);
+                    LoadProductColumn(conn);
                 }
             }
             catch (Exception ex)
@@ -62,14 +62,37 @@ namespace ShoeShop
         private void LoadCombo(SqlConnection conn, string query, ComboBox combo)
         {
             using (var cmd = new SqlCommand(query, conn))
-            using (var reader = cmd.ExecuteReader())
             {
-                while (reader.Read())
+                using (var reader = cmd.ExecuteReader())
                 {
-                    combo.Items.Add(new DictionaryItem { Id = reader.GetInt32(0), Name = reader.GetString(1) });
+                    while (reader.Read())
+                    {
+                        combo.Items.Add(new DictionaryItem { Id = reader.GetInt32(0), Name = reader.GetString(1) });
+                    }
                 }
             }
-            if (combo.Items.Count > 0) combo.SelectedIndex = 0;
+            if (combo.Items.Count > 0)
+            {
+                combo.SelectedIndex = 0;
+            }
+        }
+
+        private void LoadProductColumn(SqlConnection conn)
+        {
+            var products = new List<DictionaryItem>();
+            using (var cmd = new SqlCommand("SELECT id, title FROM products ORDER BY title", conn))
+            {
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        products.Add(new DictionaryItem { Id = reader.GetInt32(0), Name = reader.GetString(1) });
+                    }
+                }
+            }
+            ProductCol.DataSource = products;
+            ProductCol.DisplayMember = "Name";
+            ProductCol.ValueMember = "Id";
         }
 
         private void SelectComboBoxItem(ComboBox combo, int id)
@@ -91,14 +114,14 @@ namespace ShoeShop
                 using (var conn = DatabaseHelper.GetConnection())
                 {
                     conn.Open();
-                    using (var cmd = new SqlCommand("SELECT oi.product_id, p.title, oi.count FROM order_items oi JOIN products p ON oi.product_id = p.id WHERE oi.order_id = @id", conn))
+                    using (var cmd = new SqlCommand("SELECT product_id, count FROM order_items WHERE order_id = @id", conn))
                     {
                         cmd.Parameters.AddWithValue("@id", currentOrder.Id);
                         using (var reader = cmd.ExecuteReader())
                         {
                             while (reader.Read())
                             {
-                                dgvItems.Rows.Add(reader.GetInt32(0), reader.GetString(1), reader.GetInt32(2));
+                                dgvItems.Rows.Add(reader.GetInt32(0), reader.GetInt32(1));
                             }
                         }
                     }
@@ -107,37 +130,6 @@ namespace ShoeShop
             catch (Exception ex)
             {
                 MessageBox.Show($"Ошибка загрузки товаров: {ex.Message}");
-            }
-        }
-
-        private void DgvItems_CellValueChanged(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.ColumnIndex == 0 && e.RowIndex >= 0 && dgvItems.Rows[e.RowIndex].Cells[0].Value != null)
-            {
-                if (int.TryParse(dgvItems.Rows[e.RowIndex].Cells[0].Value.ToString(), out int productId))
-                {
-                    try
-                    {
-                        using (var conn = DatabaseHelper.GetConnection())
-                        {
-                            conn.Open();
-                            using (var cmd = new SqlCommand("SELECT title FROM products WHERE id = @id", conn))
-                            {
-                                cmd.Parameters.AddWithValue("@id", productId);
-                                var title = cmd.ExecuteScalar()?.ToString();
-                                if (title != null)
-                                {
-                                    dgvItems.Rows[e.RowIndex].Cells[1].Value = title;
-                                }
-                                else
-                                {
-                                    dgvItems.Rows[e.RowIndex].Cells[1].Value = "Товар не найден";
-                                }
-                            }
-                        }
-                    }
-                    catch { }
-                }
             }
         }
 
@@ -152,6 +144,33 @@ namespace ShoeShop
             if (dtpDeliveryDate.Value.Date < dtpOrderDate.Value.Date)
             {
                 MessageBox.Show("Дата доставки не может быть меньше даты заказа.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            bool hasItems = false;
+            foreach (DataGridViewRow row in dgvItems.Rows)
+            {
+                if (row.IsNewRow)
+                {
+                    continue;
+                }
+                
+                if (row.Cells[0].Value == null || row.Cells[1].Value == null)
+                {
+                    continue;
+                }
+
+                if (!int.TryParse(row.Cells[1].Value.ToString(), out int count) || count <= 0)
+                {
+                    MessageBox.Show("Количество товара должно быть больше нуля.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                hasItems = true;
+            }
+
+            if (!hasItems)
+            {
+                MessageBox.Show("Заказ должен содержать хотя бы один товар.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -200,11 +219,15 @@ namespace ShoeShop
 
                             foreach (DataGridViewRow row in dgvItems.Rows)
                             {
-                                if (row.IsNewRow) continue;
-                                if (row.Cells[0].Value != null && row.Cells[2].Value != null)
+                                if (row.IsNewRow)
+                                {
+                                    continue;
+                                }
+
+                                if (row.Cells[0].Value != null && row.Cells[1].Value != null)
                                 {
                                     int pId = Convert.ToInt32(row.Cells[0].Value);
-                                    int count = Convert.ToInt32(row.Cells[2].Value);
+                                    int count = Convert.ToInt32(row.Cells[1].Value);
 
                                     using (var insCmd = new SqlCommand("INSERT INTO order_items (order_id, product_id, count) VALUES (@oid, @pid, @cnt)", conn, tran))
                                     {
@@ -236,7 +259,10 @@ namespace ShoeShop
 
         private void BtnDelete_Click(object sender, EventArgs e)
         {
-            if (currentOrder == null) return;
+            if (currentOrder == null)
+            {
+                return;
+            }
 
             if (MessageBox.Show("Удалить заказ и все его товары?", "Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {

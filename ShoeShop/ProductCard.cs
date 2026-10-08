@@ -19,20 +19,19 @@ namespace ShoeShop
         {
             ProductData = product;
 
-            lblTitle.Text = product.Title;
+            lblTitle.Text = $"{product.CategoryName} | {product.Title}";
             lblDescription.Text = product.Description;
-            lblManufacturer.Text = product.ManufacturerName;
-            lblStock.Text = $"На складе: {product.StockQuantity}";
+            lblManufacturer.Text = $"Производитель: {product.ManufacturerName}";
+            lblSupplier.Text = $"Поставщик: {product.SupplierName}";
+            lblStock.Text = $"На складе: {product.StockQuantity} {product.Unit}";
 
             if (product.Discount > 0)
             {
                 lblCost.Text = product.Cost.ToString("C2");
                 lblCost.Font = new Font(lblCost.Font, FontStyle.Strikeout);
                 lblCost.ForeColor = Color.Red;
-                
                 lblDiscountCost.Text = product.DiscountedCost.ToString("C2");
                 lblDiscountCost.Visible = true;
-                
                 lblDiscount.Text = $"{product.Discount}%";
                 lblDiscount.Visible = true;
             }
@@ -41,7 +40,6 @@ namespace ShoeShop
                 lblCost.Text = product.Cost.ToString("C2");
                 lblCost.Font = new Font(lblCost.Font, FontStyle.Regular);
                 lblCost.ForeColor = Color.Black;
-                
                 lblDiscountCost.Visible = false;
                 lblDiscount.Visible = false;
             }
@@ -61,15 +59,42 @@ namespace ShoeShop
                 SetForeColor(Color.Black);
             }
 
-            if (!string.IsNullOrEmpty(product.PhotoPath) && File.Exists(Path.Combine(Application.StartupPath, product.PhotoPath)))
+            LoadImage(product.PhotoPath);
+        }
+
+        private void LoadImage(string photoPath)
+        {
+            if (pbPhoto.Image != null)
             {
-                try { pbPhoto.Image = Image.FromFile(Path.Combine(Application.StartupPath, product.PhotoPath)); }
-                catch { LoadDefaultImage(); }
+                pbPhoto.Image.Dispose();
+                pbPhoto.Image = null;
             }
-            else
+
+            if (!string.IsNullOrEmpty(photoPath))
             {
-                LoadDefaultImage();
+                string fullPath = Path.Combine(Application.StartupPath, photoPath);
+                if (File.Exists(fullPath))
+                {
+                    try
+                    {
+                        using (var fs = new FileStream(fullPath, FileMode.Open, FileAccess.Read))
+                        {
+                            using (var ms = new MemoryStream())
+                            {
+                                fs.CopyTo(ms);
+                                ms.Position = 0;
+                                pbPhoto.Image = Image.FromStream(ms);
+                            }
+                        }
+                        return;
+                    }
+                    catch
+                    {
+                    }
+                }
             }
+            
+            LoadDefaultImage();
         }
 
         private void SetForeColor(Color color)
@@ -77,32 +102,47 @@ namespace ShoeShop
             lblTitle.ForeColor = color;
             lblDescription.ForeColor = color;
             lblManufacturer.ForeColor = color;
+            lblSupplier.ForeColor = color;
             lblStock.ForeColor = color;
             if (color == Color.White && lblCost.ForeColor == Color.Black)
+            {
                 lblCost.ForeColor = color; 
+            }
             lblDiscountCost.ForeColor = color;
             lblDiscount.ForeColor = color;
         }
 
         private void LoadDefaultImage()
         {
-            try
+            string defaultPath = Path.Combine(Application.StartupPath, "Images", "picture.png");
+            if (File.Exists(defaultPath))
             {
-                string defaultPath = Path.Combine(Application.StartupPath, "Images", "picture.png");
-                if (File.Exists(defaultPath))
-                    pbPhoto.Image = Image.FromFile(defaultPath);
-                else
+                try
                 {
-                    Bitmap bmp = new Bitmap(300, 200);
-                    using (Graphics g = Graphics.FromImage(bmp))
+                    using (var fs = new FileStream(defaultPath, FileMode.Open, FileAccess.Read))
                     {
-                        g.Clear(Color.LightGray);
-                        g.DrawString("Нет фото", new Font("Arial", 16), Brushes.Black, new PointF(100, 80));
+                        using (var ms = new MemoryStream())
+                        {
+                            fs.CopyTo(ms);
+                            ms.Position = 0;
+                            pbPhoto.Image = Image.FromStream(ms);
+                        }
                     }
-                    pbPhoto.Image = bmp;
+                }
+                catch
+                {
                 }
             }
-            catch { }
+            else
+            {
+                Bitmap bmp = new Bitmap(300, 200);
+                using (Graphics g = Graphics.FromImage(bmp))
+                {
+                    g.Clear(Color.LightGray);
+                    g.DrawString("Нет фото", new Font("Arial", 16), Brushes.Black, new PointF(100, 80));
+                }
+                pbPhoto.Image = bmp;
+            }
         }
     }
 }

@@ -20,6 +20,7 @@ namespace ShoeShop
 
         private void ProductEditForm_Load(object sender, EventArgs e)
         {
+            AppHelper.SetAppIcon(this);
             LoadDictionaries();
 
             if (currentProduct != null)
@@ -37,10 +38,27 @@ namespace ShoeShop
                 SelectComboBoxItem(cmbManufacturer, currentProduct.ManufacturerId);
                 SelectComboBoxItem(cmbSupplier, currentProduct.SupplierId);
 
-                if (!string.IsNullOrEmpty(currentProduct.PhotoPath) && File.Exists(Path.Combine(Application.StartupPath, currentProduct.PhotoPath)))
+                if (!string.IsNullOrEmpty(currentProduct.PhotoPath))
                 {
-                    try { pbPhoto.Image = Image.FromFile(Path.Combine(Application.StartupPath, currentProduct.PhotoPath)); }
-                    catch { }
+                    string fullPath = Path.Combine(Application.StartupPath, currentProduct.PhotoPath);
+                    if (File.Exists(fullPath))
+                    {
+                        try
+                        {
+                            using (var fs = new FileStream(fullPath, FileMode.Open, FileAccess.Read))
+                            {
+                                using (var ms = new MemoryStream())
+                                {
+                                    fs.CopyTo(ms);
+                                    ms.Position = 0;
+                                    pbPhoto.Image = Image.FromStream(ms);
+                                }
+                            }
+                        }
+                        catch
+                        {
+                        }
+                    }
                 }
                 btnDelete.Visible = true;
             }
@@ -73,14 +91,19 @@ namespace ShoeShop
         private void LoadCombo(SqlConnection conn, string query, ComboBox combo)
         {
             using (var cmd = new SqlCommand(query, conn))
-            using (var reader = cmd.ExecuteReader())
             {
-                while (reader.Read())
+                using (var reader = cmd.ExecuteReader())
                 {
-                    combo.Items.Add(new DictionaryItem { Id = reader.GetInt32(0), Name = reader.GetString(1) });
+                    while (reader.Read())
+                    {
+                        combo.Items.Add(new DictionaryItem { Id = reader.GetInt32(0), Name = reader.GetString(1) });
+                    }
                 }
             }
-            if (combo.Items.Count > 0) combo.SelectedIndex = 0;
+            if (combo.Items.Count > 0)
+            {
+                combo.SelectedIndex = 0;
+            }
         }
 
         private void SelectComboBoxItem(ComboBox combo, int id)
@@ -104,8 +127,21 @@ namespace ShoeShop
                 {
                     try
                     {
-                        Image img = Image.FromFile(ofd.FileName);
-                        pbPhoto.Image = img;
+                        if (pbPhoto.Image != null)
+                        {
+                            pbPhoto.Image.Dispose();
+                            pbPhoto.Image = null;
+                        }
+
+                        using (var fs = new FileStream(ofd.FileName, FileMode.Open, FileAccess.Read))
+                        {
+                            using (var ms = new MemoryStream())
+                            {
+                                fs.CopyTo(ms);
+                                ms.Position = 0;
+                                pbPhoto.Image = Image.FromStream(ms);
+                            }
+                        }
                         newPhotoPath = ofd.FileName;
                     }
                     catch (Exception ex)
@@ -129,7 +165,10 @@ namespace ShoeShop
             if (newPhotoPath != null)
             {
                 string imagesDir = Path.Combine(Application.StartupPath, "Images");
-                if (!Directory.Exists(imagesDir)) Directory.CreateDirectory(imagesDir);
+                if (!Directory.Exists(imagesDir))
+                {
+                    Directory.CreateDirectory(imagesDir);
+                }
 
                 string ext = Path.GetExtension(newPhotoPath);
                 string fileName = Guid.NewGuid().ToString() + ext;
@@ -137,11 +176,19 @@ namespace ShoeShop
 
                 try
                 {
-                    using (Image original = Image.FromFile(newPhotoPath))
+                    using (var fs = new FileStream(newPhotoPath, FileMode.Open, FileAccess.Read))
                     {
-                        using (Bitmap resized = new Bitmap(original, new Size(300, 200)))
+                        using (var ms = new MemoryStream())
                         {
-                            resized.Save(targetPath);
+                            fs.CopyTo(ms);
+                            ms.Position = 0;
+                            using (Image original = Image.FromStream(ms))
+                            {
+                                using (Bitmap resized = new Bitmap(original, new Size(300, 200)))
+                                {
+                                    resized.Save(targetPath);
+                                }
+                            }
                         }
                     }
                     relativePhotoPath = Path.Combine("Images", fileName);
@@ -149,7 +196,10 @@ namespace ShoeShop
                     if (currentProduct != null && !string.IsNullOrEmpty(currentProduct.PhotoPath) && !currentProduct.PhotoPath.Contains("picture.png"))
                     {
                         string oldPath = Path.Combine(Application.StartupPath, currentProduct.PhotoPath);
-                        if (File.Exists(oldPath)) File.Delete(oldPath);
+                        if (File.Exists(oldPath))
+                        {
+                            File.Delete(oldPath);
+                        }
                     }
                 }
                 catch (Exception ex)
@@ -178,7 +228,10 @@ namespace ShoeShop
 
                     using (var cmd = new SqlCommand(query, conn))
                     {
-                        if (currentProduct != null) cmd.Parameters.AddWithValue("@id", currentProduct.Id);
+                        if (currentProduct != null)
+                        {
+                            cmd.Parameters.AddWithValue("@id", currentProduct.Id);
+                        }
                         cmd.Parameters.AddWithValue("@title", txtTitle.Text);
                         cmd.Parameters.AddWithValue("@cat", ((DictionaryItem)cmbCategory.SelectedItem).Id);
                         cmd.Parameters.AddWithValue("@desc", txtDescription.Text);
@@ -204,7 +257,10 @@ namespace ShoeShop
 
         private void BtnDelete_Click(object sender, EventArgs e)
         {
-            if (currentProduct == null) return;
+            if (currentProduct == null)
+            {
+                return;
+            }
 
             try
             {
@@ -230,10 +286,19 @@ namespace ShoeShop
                             delCmd.ExecuteNonQuery();
                         }
                         
+                        if (pbPhoto.Image != null)
+                        {
+                            pbPhoto.Image.Dispose();
+                            pbPhoto.Image = null;
+                        }
+
                         if (!string.IsNullOrEmpty(currentProduct.PhotoPath) && !currentProduct.PhotoPath.Contains("picture.png"))
                         {
                             string oldPath = Path.Combine(Application.StartupPath, currentProduct.PhotoPath);
-                            if (File.Exists(oldPath)) File.Delete(oldPath);
+                            if (File.Exists(oldPath))
+                            {
+                                File.Delete(oldPath);
+                            }
                         }
 
                         this.DialogResult = DialogResult.OK;

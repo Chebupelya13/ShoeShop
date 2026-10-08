@@ -17,11 +17,13 @@ namespace ShoeShop
         {
             this.pnlTop = new System.Windows.Forms.Panel();
             this.btnAddOrder = new System.Windows.Forms.Button();
+            this.btnBack = new System.Windows.Forms.Button();
             this.flpOrders = new System.Windows.Forms.FlowLayoutPanel();
             this.pnlTop.SuspendLayout();
             this.SuspendLayout();
             
             // pnlTop
+            this.pnlTop.Controls.Add(this.btnBack);
             this.pnlTop.Controls.Add(this.btnAddOrder);
             this.pnlTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlTop.Location = new System.Drawing.Point(0, 0);
@@ -29,8 +31,17 @@ namespace ShoeShop
             this.pnlTop.Size = new System.Drawing.Size(784, 50);
             this.pnlTop.TabIndex = 0;
             
+            // btnBack
+            this.btnBack.Location = new System.Drawing.Point(12, 10);
+            this.btnBack.Name = "btnBack";
+            this.btnBack.Size = new System.Drawing.Size(80, 30);
+            this.btnBack.TabIndex = 1;
+            this.btnBack.Text = "Назад";
+            this.btnBack.UseVisualStyleBackColor = true;
+            this.btnBack.Click += new System.EventHandler(this.BtnBack_Click);
+            
             // btnAddOrder
-            this.btnAddOrder.Location = new System.Drawing.Point(12, 10);
+            this.btnAddOrder.Location = new System.Drawing.Point(100, 10);
             this.btnAddOrder.Name = "btnAddOrder";
             this.btnAddOrder.Size = new System.Drawing.Size(120, 30);
             this.btnAddOrder.TabIndex = 0;
@@ -55,6 +66,7 @@ namespace ShoeShop
             this.Name = "OrdersForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Заказы";
+            this.Icon = System.Drawing.SystemIcons.Application;
             this.Load += new System.EventHandler(this.OrdersForm_Load);
             this.pnlTop.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -62,6 +74,7 @@ namespace ShoeShop
 
         private System.Windows.Forms.Panel pnlTop;
         private System.Windows.Forms.Button btnAddOrder;
+        private System.Windows.Forms.Button btnBack;
         private System.Windows.Forms.FlowLayoutPanel flpOrders;
     }
 }

@@ -16,6 +16,7 @@ namespace ShoeShop
         private void InitializeComponent()
         {
             this.pnlHeader = new System.Windows.Forms.Panel();
+            this.pbLogo = new System.Windows.Forms.PictureBox();
             this.btnOrders = new System.Windows.Forms.Button();
             this.lblUserInfo = new System.Windows.Forms.Label();
             this.btnLogout = new System.Windows.Forms.Button();
@@ -28,11 +29,13 @@ namespace ShoeShop
             this.pnlFooter = new System.Windows.Forms.Panel();
             this.lblCount = new System.Windows.Forms.Label();
             this.pnlHeader.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).BeginInit();
             this.pnlFilters.SuspendLayout();
             this.pnlFooter.SuspendLayout();
             this.SuspendLayout();
             
             // pnlHeader
+            this.pnlHeader.Controls.Add(this.pbLogo);
             this.pnlHeader.Controls.Add(this.btnOrders);
             this.pnlHeader.Controls.Add(this.lblUserInfo);
             this.pnlHeader.Controls.Add(this.btnLogout);
@@ -42,8 +45,17 @@ namespace ShoeShop
             this.pnlHeader.Size = new System.Drawing.Size(800, 50);
             this.pnlHeader.TabIndex = 0;
             
+            // pbLogo
+            this.pbLogo.Location = new System.Drawing.Point(12, 5);
+            this.pbLogo.Name = "pbLogo";
+            this.pbLogo.Size = new System.Drawing.Size(40, 40);
+            this.pbLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pbLogo.TabIndex = 3;
+            this.pbLogo.TabStop = false;
+            try { this.pbLogo.Image = System.Drawing.Image.FromFile(System.IO.Path.Combine(System.Windows.Forms.Application.StartupPath, "logo.png")); } catch { }
+            
             // btnOrders
-            this.btnOrders.Location = new System.Drawing.Point(12, 10);
+            this.btnOrders.Location = new System.Drawing.Point(60, 10);
             this.btnOrders.Name = "btnOrders";
             this.btnOrders.Size = new System.Drawing.Size(100, 30);
             this.btnOrders.TabIndex = 2;
@@ -150,9 +162,11 @@ namespace ShoeShop
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Каталог товаров";
+            this.Icon = System.Drawing.SystemIcons.Application;
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.pnlHeader.ResumeLayout(false);
             this.pnlHeader.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).EndInit();
             this.pnlFilters.ResumeLayout(false);
             this.pnlFilters.PerformLayout();
             this.pnlFooter.ResumeLayout(false);
@@ -161,6 +175,7 @@ namespace ShoeShop
         }
 
         private System.Windows.Forms.Panel pnlHeader;
+        private System.Windows.Forms.PictureBox pbLogo;
         private System.Windows.Forms.Label lblUserInfo;
         private System.Windows.Forms.Button btnLogout;
         private System.Windows.Forms.Button btnOrders;

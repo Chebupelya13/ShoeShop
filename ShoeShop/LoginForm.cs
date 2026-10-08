@@ -12,6 +12,7 @@ namespace ShoeShop
         public LoginForm()
         {
             InitializeComponent();
+            this.Load += (s, e) => AppHelper.SetAppIcon(this);
         }
 
         private void BtnLogin_Click(object sender, EventArgs e)

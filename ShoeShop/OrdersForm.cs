@@ -15,6 +15,7 @@ namespace ShoeShop
 
         private void OrdersForm_Load(object sender, EventArgs e)
         {
+            AppHelper.SetAppIcon(this);
             if (LoginForm.CurrentUser.RoleId == 4)
             {
                 btnAddOrder.Visible = true;
@@ -45,36 +46,38 @@ namespace ShoeShop
                     ";
 
                     using (var cmd = new SqlCommand(query, conn))
-                    using (var reader = cmd.ExecuteReader())
                     {
-                        while (reader.Read())
+                        using (var reader = cmd.ExecuteReader())
                         {
-                            var order = new Order
+                            while (reader.Read())
                             {
-                                Id = reader.GetInt32(0),
-                                OrderArticle = reader.GetString(1),
-                                StatusId = reader.GetInt32(2),
-                                StatusName = reader.GetString(3),
-                                PickupPointId = reader.GetInt32(4),
-                                PickupPointAddress = reader.GetString(5),
-                                OrderDate = reader.GetDateTime(6),
-                                DeliveryDate = reader.GetDateTime(7)
-                            };
-
-                            OrderCard card = new OrderCard();
-                            card.BindData(order);
-
-                            if (LoginForm.CurrentUser.RoleId == 4)
-                            {
-                                card.Cursor = Cursors.Hand;
-                                card.Click += (s, ev) => EditOrder(order);
-                                foreach (Control c in card.Controls)
+                                var order = new Order
                                 {
-                                    c.Click += (s, ev) => EditOrder(order);
-                                }
-                            }
+                                    Id = reader.GetInt32(0),
+                                    OrderArticle = reader.GetString(1),
+                                    StatusId = reader.GetInt32(2),
+                                    StatusName = reader.GetString(3),
+                                    PickupPointId = reader.GetInt32(4),
+                                    PickupPointAddress = reader.GetString(5),
+                                    OrderDate = reader.GetDateTime(6),
+                                    DeliveryDate = reader.GetDateTime(7)
+                                };
 
-                            flpOrders.Controls.Add(card);
+                                OrderCard card = new OrderCard();
+                                card.BindData(order);
+
+                                if (LoginForm.CurrentUser.RoleId == 4)
+                                {
+                                    card.Cursor = Cursors.Hand;
+                                    card.Click += (s, ev) => EditOrder(order);
+                                    foreach (Control c in card.Controls)
+                                    {
+                                        c.Click += (s, ev) => EditOrder(order);
+                                    }
+                                }
+
+                                flpOrders.Controls.Add(card);
+                            }
                         }
                     }
                 }
@@ -101,6 +104,11 @@ namespace ShoeShop
             {
                 LoadData();
             }
+        }
+
+        private void BtnBack_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

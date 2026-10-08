@@ -26,9 +26,8 @@ namespace ShoeShop
             this.lblDeliveryDate = new System.Windows.Forms.Label();
             this.dtpDeliveryDate = new System.Windows.Forms.DateTimePicker();
             this.dgvItems = new System.Windows.Forms.DataGridView();
-            this.ProductId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ProductTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Count = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ProductCol = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.CountCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvItems)).BeginInit();
@@ -111,29 +110,21 @@ namespace ShoeShop
             // dgvItems
             this.dgvItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvItems.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ProductId,
-            this.ProductTitle,
-            this.Count});
+            this.ProductCol,
+            this.CountCol});
             this.dgvItems.Location = new System.Drawing.Point(20, 180);
             this.dgvItems.Name = "dgvItems";
             this.dgvItems.Size = new System.Drawing.Size(500, 150);
             this.dgvItems.TabIndex = 10;
             
-            // ProductId
-            this.ProductId.HeaderText = "ID Товара";
-            this.ProductId.Name = "ProductId";
-            // 
-            // ProductTitle
-            // 
-            this.ProductTitle.HeaderText = "Наименование (только для чтения)";
-            this.ProductTitle.Name = "ProductTitle";
-            this.ProductTitle.ReadOnly = true;
-            this.ProductTitle.Width = 200;
-            // 
-            // Count
-            // 
-            this.Count.HeaderText = "Количество";
-            this.Count.Name = "Count";
+            // ProductCol
+            this.ProductCol.HeaderText = "Товар";
+            this.ProductCol.Name = "ProductCol";
+            this.ProductCol.Width = 300;
+            
+            // CountCol
+            this.CountCol.HeaderText = "Количество";
+            this.CountCol.Name = "CountCol";
             
             // btnSave
             this.btnSave.Location = new System.Drawing.Point(20, 350);
@@ -176,6 +167,7 @@ namespace ShoeShop
             this.Name = "OrderEditForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Заказ";
+            this.Icon = System.Drawing.SystemIcons.Application;
             this.Load += new System.EventHandler(this.OrderEditForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvItems)).EndInit();
             this.ResumeLayout(false);
@@ -193,9 +185,8 @@ namespace ShoeShop
         private System.Windows.Forms.Label lblDeliveryDate;
         private System.Windows.Forms.DateTimePicker dtpDeliveryDate;
         private System.Windows.Forms.DataGridView dgvItems;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ProductId;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ProductTitle;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Count;
+        private System.Windows.Forms.DataGridViewComboBoxColumn ProductCol;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CountCol;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnDelete;
     }
