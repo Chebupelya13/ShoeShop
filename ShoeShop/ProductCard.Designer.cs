@@ -117,7 +117,8 @@ namespace ShoeShop
             this.Controls.Add(this.pbPhoto);
             this.Margin = new System.Windows.Forms.Padding(5);
             this.Name = "ProductCard";
-            this.Size = new System.Drawing.Size(740, 120);
+            this.Size = new System.Drawing.Size(740, 155);
+            this.Padding = new System.Windows.Forms.Padding(0, 0, 0, 8);
             ((System.ComponentModel.ISupportInitialize)(this.pbPhoto)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

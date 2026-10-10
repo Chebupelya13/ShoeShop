@@ -12,7 +12,10 @@ namespace ShoeShop
         public LoginForm()
         {
             InitializeComponent();
-            this.Load += (s, e) => AppHelper.SetAppIcon(this);
+            this.Load += (s, e) => {
+                AppHelper.SetAppIcon(this);
+                AppHelper.ApplyTheme(this);
+            };
         }
 
         private void BtnLogin_Click(object sender, EventArgs e)

@@ -13,12 +13,14 @@ namespace ShoeShop
         public ProductCard()
         {
             InitializeComponent();
+            AppHelper.ApplyTheme(this);
         }
 
         public void BindData(Product product)
         {
             ProductData = product;
 
+            lblTitle.Font = AppHelper.HeaderFont;
             lblTitle.Text = $"{product.CategoryName} | {product.Title}";
             lblDescription.Text = product.Description;
             lblManufacturer.Text = $"Производитель: {product.ManufacturerName}";
@@ -28,9 +30,11 @@ namespace ShoeShop
             if (product.Discount > 0)
             {
                 lblCost.Text = product.Cost.ToString("C2");
-                lblCost.Font = new Font(lblCost.Font, FontStyle.Strikeout);
-                lblCost.ForeColor = Color.Red;
+                lblCost.Font = AppHelper.StrikeFont;
+                lblCost.ForeColor = AppHelper.ColorRed;
                 lblDiscountCost.Text = product.DiscountedCost.ToString("C2");
+                lblDiscountCost.Font = AppHelper.BoldFont;
+                lblDiscountCost.ForeColor = AppHelper.ColorBlack;
                 lblDiscountCost.Visible = true;
                 lblDiscount.Text = $"{product.Discount}%";
                 lblDiscount.Visible = true;
@@ -38,25 +42,26 @@ namespace ShoeShop
             else
             {
                 lblCost.Text = product.Cost.ToString("C2");
-                lblCost.Font = new Font(lblCost.Font, FontStyle.Regular);
-                lblCost.ForeColor = Color.Black;
+                lblCost.Font = AppHelper.BoldFont;
+                lblCost.ForeColor = AppHelper.ColorBlack;
                 lblDiscountCost.Visible = false;
                 lblDiscount.Visible = false;
             }
 
             if (product.StockQuantity == 0)
             {
-                this.BackColor = Color.LightBlue;
+                this.BackColor = AppHelper.ColorLightBlue;
+                SetForeColor(AppHelper.ColorBlack);
             }
             else if (product.Discount > 15)
             {
-                this.BackColor = Color.FromArgb(46, 139, 87);
-                SetForeColor(Color.White);
+                this.BackColor = AppHelper.ColorSeaGreen;
+                SetForeColor(AppHelper.ColorWhite);
             }
             else
             {
-                this.BackColor = SystemColors.Control;
-                SetForeColor(Color.Black);
+                this.BackColor = AppHelper.ColorWhite;
+                SetForeColor(AppHelper.ColorBlack);
             }
 
             LoadImage(product.PhotoPath);

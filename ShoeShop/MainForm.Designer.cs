@@ -15,163 +15,182 @@ namespace ShoeShop
 
         private void InitializeComponent()
         {
-            this.pnlHeader = new System.Windows.Forms.Panel();
-            this.pbLogo = new System.Windows.Forms.PictureBox();
-            this.btnOrders = new System.Windows.Forms.Button();
-            this.lblUserInfo = new System.Windows.Forms.Label();
-            this.btnLogout = new System.Windows.Forms.Button();
-            this.pnlFilters = new System.Windows.Forms.Panel();
-            this.txtSearch = new System.Windows.Forms.TextBox();
-            this.cmbSort = new System.Windows.Forms.ComboBox();
-            this.cmbFilter = new System.Windows.Forms.ComboBox();
-            this.btnAddProduct = new System.Windows.Forms.Button();
-            this.flpProducts = new System.Windows.Forms.FlowLayoutPanel();
-            this.pnlFooter = new System.Windows.Forms.Panel();
-            this.lblCount = new System.Windows.Forms.Label();
-            this.pnlHeader.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).BeginInit();
-            this.pnlFilters.SuspendLayout();
-            this.pnlFooter.SuspendLayout();
-            this.SuspendLayout();
-            
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            pnlHeader = new Panel();
+            pbLogo = new PictureBox();
+            btnOrders = new Button();
+            lblUserInfo = new Label();
+            btnLogout = new Button();
+            pnlFilters = new Panel();
+            txtSearch = new TextBox();
+            cmbSort = new ComboBox();
+            cmbFilter = new ComboBox();
+            btnAddProduct = new Button();
+            flpProducts = new FlowLayoutPanel();
+            pnlFooter = new Panel();
+            lblCount = new Label();
+            pnlHeader.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pbLogo).BeginInit();
+            pnlFilters.SuspendLayout();
+            pnlFooter.SuspendLayout();
+            SuspendLayout();
+            // 
             // pnlHeader
-            this.pnlHeader.Controls.Add(this.pbLogo);
-            this.pnlHeader.Controls.Add(this.btnOrders);
-            this.pnlHeader.Controls.Add(this.lblUserInfo);
-            this.pnlHeader.Controls.Add(this.btnLogout);
-            this.pnlHeader.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlHeader.Location = new System.Drawing.Point(0, 0);
-            this.pnlHeader.Name = "pnlHeader";
-            this.pnlHeader.Size = new System.Drawing.Size(800, 50);
-            this.pnlHeader.TabIndex = 0;
-            
+            // 
+            pnlHeader.BackColor = Color.Lime;
+            pnlHeader.Controls.Add(pbLogo);
+            pnlHeader.Controls.Add(btnOrders);
+            pnlHeader.Controls.Add(lblUserInfo);
+            pnlHeader.Controls.Add(btnLogout);
+            pnlHeader.Dock = DockStyle.Top;
+            pnlHeader.Location = new Point(0, 0);
+            pnlHeader.Name = "pnlHeader";
+            pnlHeader.Size = new Size(800, 50);
+            pnlHeader.TabIndex = 0;
+            // 
             // pbLogo
-            this.pbLogo.Location = new System.Drawing.Point(12, 5);
-            this.pbLogo.Name = "pbLogo";
-            this.pbLogo.Size = new System.Drawing.Size(40, 40);
-            this.pbLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pbLogo.TabIndex = 3;
-            this.pbLogo.TabStop = false;
-            try { this.pbLogo.Image = System.Drawing.Image.FromFile(System.IO.Path.Combine(System.Windows.Forms.Application.StartupPath, "logo.png")); } catch { }
-            
+            // 
+            pbLogo.BackgroundImage = (Image)resources.GetObject("pbLogo.BackgroundImage");
+            pbLogo.Image = (Image)resources.GetObject("pbLogo.Image");
+            pbLogo.Location = new Point(12, 5);
+            pbLogo.Name = "pbLogo";
+            pbLogo.Size = new Size(40, 40);
+            pbLogo.SizeMode = PictureBoxSizeMode.StretchImage;
+            pbLogo.TabIndex = 3;
+            pbLogo.TabStop = false;
+            pbLogo.Click += pbLogo_Click;
+            // 
             // btnOrders
-            this.btnOrders.Location = new System.Drawing.Point(60, 10);
-            this.btnOrders.Name = "btnOrders";
-            this.btnOrders.Size = new System.Drawing.Size(100, 30);
-            this.btnOrders.TabIndex = 2;
-            this.btnOrders.Text = "Заказы";
-            this.btnOrders.UseVisualStyleBackColor = true;
-            this.btnOrders.Click += new System.EventHandler(this.BtnOrders_Click);
-            
+            // 
+            btnOrders.Location = new Point(60, 10);
+            btnOrders.Name = "btnOrders";
+            btnOrders.Size = new Size(100, 30);
+            btnOrders.TabIndex = 2;
+            btnOrders.Text = "Заказы";
+            btnOrders.UseVisualStyleBackColor = true;
+            btnOrders.Click += BtnOrders_Click;
+            // 
             // lblUserInfo
-            this.lblUserInfo.AutoSize = true;
-            this.lblUserInfo.Location = new System.Drawing.Point(300, 18);
-            this.lblUserInfo.Name = "lblUserInfo";
-            this.lblUserInfo.Size = new System.Drawing.Size(120, 15);
-            this.lblUserInfo.TabIndex = 1;
-            this.lblUserInfo.Text = "ФИО (Роль)";
-            this.lblUserInfo.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            
+            // 
+            lblUserInfo.AutoSize = true;
+            lblUserInfo.Location = new Point(300, 18);
+            lblUserInfo.Name = "lblUserInfo";
+            lblUserInfo.Size = new Size(72, 15);
+            lblUserInfo.TabIndex = 1;
+            lblUserInfo.Text = "ФИО (Роль)";
+            lblUserInfo.TextAlign = ContentAlignment.MiddleRight;
+            // 
             // btnLogout
-            this.btnLogout.Location = new System.Drawing.Point(650, 10);
-            this.btnLogout.Name = "btnLogout";
-            this.btnLogout.Size = new System.Drawing.Size(130, 30);
-            this.btnLogout.TabIndex = 0;
-            this.btnLogout.Text = "Выйти из аккаунта";
-            this.btnLogout.UseVisualStyleBackColor = true;
-            this.btnLogout.Click += new System.EventHandler(this.BtnLogout_Click);
-            
+            // 
+            btnLogout.Location = new Point(620, 10);
+            btnLogout.Name = "btnLogout";
+            btnLogout.Size = new Size(160, 30);
+            btnLogout.TabIndex = 0;
+            btnLogout.Text = "Выйти из аккаунта";
+            btnLogout.UseVisualStyleBackColor = true;
+            btnLogout.Click += BtnLogout_Click;
+            // 
             // pnlFilters
-            this.pnlFilters.Controls.Add(this.txtSearch);
-            this.pnlFilters.Controls.Add(this.cmbSort);
-            this.pnlFilters.Controls.Add(this.cmbFilter);
-            this.pnlFilters.Controls.Add(this.btnAddProduct);
-            this.pnlFilters.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlFilters.Location = new System.Drawing.Point(0, 50);
-            this.pnlFilters.Name = "pnlFilters";
-            this.pnlFilters.Size = new System.Drawing.Size(800, 40);
-            this.pnlFilters.TabIndex = 1;
-            
+            // 
+            pnlFilters.BackColor = Color.Lime;
+            pnlFilters.Controls.Add(txtSearch);
+            pnlFilters.Controls.Add(cmbSort);
+            pnlFilters.Controls.Add(cmbFilter);
+            pnlFilters.Controls.Add(btnAddProduct);
+            pnlFilters.Dock = DockStyle.Top;
+            pnlFilters.Location = new Point(0, 50);
+            pnlFilters.Name = "pnlFilters";
+            pnlFilters.Size = new Size(800, 40);
+            pnlFilters.TabIndex = 1;
+            // 
             // txtSearch
-            this.txtSearch.Location = new System.Drawing.Point(12, 8);
-            this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(200, 23);
-            this.txtSearch.TabIndex = 0;
-            this.txtSearch.TextChanged += new System.EventHandler(this.Filters_Changed);
-            
+            // 
+            txtSearch.Location = new Point(12, 8);
+            txtSearch.Name = "txtSearch";
+            txtSearch.Size = new Size(200, 23);
+            txtSearch.TabIndex = 0;
+            txtSearch.TextChanged += Filters_Changed;
+            // 
             // cmbSort
-            this.cmbSort.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbSort.FormattingEnabled = true;
-            this.cmbSort.Location = new System.Drawing.Point(230, 8);
-            this.cmbSort.Name = "cmbSort";
-            this.cmbSort.Size = new System.Drawing.Size(150, 23);
-            this.cmbSort.TabIndex = 1;
-            this.cmbSort.SelectedIndexChanged += new System.EventHandler(this.Filters_Changed);
-            
+            // 
+            cmbSort.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbSort.FormattingEnabled = true;
+            cmbSort.Location = new Point(230, 8);
+            cmbSort.Name = "cmbSort";
+            cmbSort.Size = new Size(180, 23);
+            cmbSort.TabIndex = 1;
+            cmbSort.SelectedIndexChanged += Filters_Changed;
+            // 
             // cmbFilter
-            this.cmbFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbFilter.FormattingEnabled = true;
-            this.cmbFilter.Location = new System.Drawing.Point(400, 8);
-            this.cmbFilter.Name = "cmbFilter";
-            this.cmbFilter.Size = new System.Drawing.Size(150, 23);
-            this.cmbFilter.TabIndex = 2;
-            this.cmbFilter.SelectedIndexChanged += new System.EventHandler(this.Filters_Changed);
-            
+            // 
+            cmbFilter.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbFilter.FormattingEnabled = true;
+            cmbFilter.Location = new Point(430, 8);
+            cmbFilter.Name = "cmbFilter";
+            cmbFilter.Size = new Size(150, 23);
+            cmbFilter.TabIndex = 2;
+            cmbFilter.SelectedIndexChanged += Filters_Changed;
+            // 
             // btnAddProduct
-            this.btnAddProduct.Location = new System.Drawing.Point(580, 7);
-            this.btnAddProduct.Name = "btnAddProduct";
-            this.btnAddProduct.Size = new System.Drawing.Size(120, 25);
-            this.btnAddProduct.TabIndex = 3;
-            this.btnAddProduct.Text = "Добавить товар";
-            this.btnAddProduct.UseVisualStyleBackColor = true;
-            this.btnAddProduct.Click += new System.EventHandler(this.BtnAddProduct_Click);
-            
+            // 
+            btnAddProduct.Location = new Point(600, 7);
+            btnAddProduct.Name = "btnAddProduct";
+            btnAddProduct.Size = new Size(150, 25);
+            btnAddProduct.TabIndex = 3;
+            btnAddProduct.Text = "Добавить товар";
+            btnAddProduct.UseVisualStyleBackColor = true;
+            btnAddProduct.Click += BtnAddProduct_Click;
+            // 
             // flpProducts
-            this.flpProducts.AutoScroll = true;
-            this.flpProducts.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flpProducts.Location = new System.Drawing.Point(0, 90);
-            this.flpProducts.Name = "flpProducts";
-            this.flpProducts.Size = new System.Drawing.Size(800, 320);
-            this.flpProducts.TabIndex = 2;
-            
+            // 
+            flpProducts.AutoScroll = true;
+            flpProducts.Dock = DockStyle.Fill;
+            flpProducts.Location = new Point(0, 90);
+            flpProducts.Name = "flpProducts";
+            flpProducts.Size = new Size(800, 330);
+            flpProducts.TabIndex = 2;
+            // 
             // pnlFooter
-            this.pnlFooter.Controls.Add(this.lblCount);
-            this.pnlFooter.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlFooter.Location = new System.Drawing.Point(0, 410);
-            this.pnlFooter.Name = "pnlFooter";
-            this.pnlFooter.Size = new System.Drawing.Size(800, 40);
-            this.pnlFooter.TabIndex = 3;
-            
+            // 
+            pnlFooter.Controls.Add(lblCount);
+            pnlFooter.Dock = DockStyle.Bottom;
+            pnlFooter.Location = new Point(0, 420);
+            pnlFooter.Name = "pnlFooter";
+            pnlFooter.Size = new Size(800, 30);
+            pnlFooter.TabIndex = 3;
+            // 
             // lblCount
-            this.lblCount.AutoSize = true;
-            this.lblCount.Location = new System.Drawing.Point(12, 12);
-            this.lblCount.Name = "lblCount";
-            this.lblCount.Size = new System.Drawing.Size(161, 15);
-            this.lblCount.TabIndex = 0;
-            this.lblCount.Text = "Отображено X из Y товаров";
-            
+            // 
+            lblCount.AutoSize = true;
+            lblCount.Location = new Point(12, 7);
+            lblCount.Name = "lblCount";
+            lblCount.Size = new Size(159, 15);
+            lblCount.TabIndex = 0;
+            lblCount.Text = "Отображено X из Y товаров";
+            // 
             // MainForm
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.flpProducts);
-            this.Controls.Add(this.pnlFooter);
-            this.Controls.Add(this.pnlFilters);
-            this.Controls.Add(this.pnlHeader);
-            this.MinimumSize = new System.Drawing.Size(816, 489);
-            this.Name = "MainForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Каталог товаров";
-            this.Icon = System.Drawing.SystemIcons.Application;
-            this.Load += new System.EventHandler(this.MainForm_Load);
-            this.pnlHeader.ResumeLayout(false);
-            this.pnlHeader.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).EndInit();
-            this.pnlFilters.ResumeLayout(false);
-            this.pnlFilters.PerformLayout();
-            this.pnlFooter.ResumeLayout(false);
-            this.pnlFooter.PerformLayout();
-            this.ResumeLayout(false);
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(800, 450);
+            Controls.Add(flpProducts);
+            Controls.Add(pnlFooter);
+            Controls.Add(pnlFilters);
+            Controls.Add(pnlHeader);
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            MinimumSize = new Size(816, 489);
+            Name = "MainForm";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Каталог товаров";
+            Load += MainForm_Load;
+            pnlHeader.ResumeLayout(false);
+            pnlHeader.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pbLogo).EndInit();
+            pnlFilters.ResumeLayout(false);
+            pnlFilters.PerformLayout();
+            pnlFooter.ResumeLayout(false);
+            pnlFooter.PerformLayout();
+            ResumeLayout(false);
         }
 
         private System.Windows.Forms.Panel pnlHeader;

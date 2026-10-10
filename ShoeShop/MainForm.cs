@@ -19,6 +19,9 @@ namespace ShoeShop
         private void MainForm_Load(object sender, EventArgs e)
         {
             AppHelper.SetAppIcon(this);
+            AppHelper.ApplyTheme(this);
+            flpProducts.BringToFront();
+
             lblUserInfo.Text = $"{LoginForm.CurrentUser.FullName} ({LoginForm.CurrentUser.RoleName})";
             lblUserInfo.Left = btnLogout.Left - lblUserInfo.Width - 20;
 
@@ -214,6 +217,11 @@ namespace ShoeShop
         {
             OrdersForm form = new OrdersForm();
             form.ShowDialog(this);
+        }
+
+        private void pbLogo_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

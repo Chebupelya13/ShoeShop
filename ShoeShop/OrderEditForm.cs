@@ -20,6 +20,7 @@ namespace ShoeShop
         private void OrderEditForm_Load(object sender, EventArgs e)
         {
             AppHelper.SetAppIcon(this);
+            AppHelper.ApplyTheme(this);
             LoadDictionaries();
 
             if (currentOrder != null)

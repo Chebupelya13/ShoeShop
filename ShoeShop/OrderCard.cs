@@ -11,11 +11,14 @@ namespace ShoeShop
         public OrderCard()
         {
             InitializeComponent();
+            AppHelper.ApplyTheme(this);
+            this.BackColor = AppHelper.ColorWhite;
         }
 
         public void BindData(Order order)
         {
             OrderData = order;
+            lblArticle.Font = AppHelper.HeaderFont;
             lblArticle.Text = order.OrderArticle;
             lblStatus.Text = order.StatusName;
             lblPickupPoint.Text = order.PickupPointAddress;

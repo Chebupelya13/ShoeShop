@@ -21,6 +21,7 @@ namespace ShoeShop
         private void ProductEditForm_Load(object sender, EventArgs e)
         {
             AppHelper.SetAppIcon(this);
+            AppHelper.ApplyTheme(this);
             LoadDictionaries();
 
             if (currentProduct != null)

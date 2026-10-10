@@ -16,6 +16,7 @@ namespace ShoeShop
         private void OrdersForm_Load(object sender, EventArgs e)
         {
             AppHelper.SetAppIcon(this);
+            AppHelper.ApplyTheme(this);
             if (LoginForm.CurrentUser.RoleId == 4)
             {
                 btnAddOrder.Visible = true;
